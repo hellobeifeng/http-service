@@ -1,0 +1,24 @@
+{
+  "name": "http-service-base",
+  "version": "0.0.1",
+  "description": "http-service",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hellobeifeng/http-service.git"
+  },
+  "author": "954662346@qq.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hellobeifeng/http-service/issues"
+  },
+  "homepage": "https://github.com/hellobeifeng/http-service#readme",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "http-client-base": "^2.0.0"
+  }
+}
