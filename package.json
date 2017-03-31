@@ -1,6 +1,6 @@
 {
   "name": "http-service-base",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "http-service",
   "main": "app.js",
   "scripts": {

@@ -1,5 +1,5 @@
 var HttpService = require('../app');
-var testIndex = require('./index');
+var testIndex = require('./com');
 
 var movieService = HttpService.$getDefaultService().$getMovieService();
 

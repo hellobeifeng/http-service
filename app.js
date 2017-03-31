@@ -1,6 +1,6 @@
 var BookService = require('./lib/BookService');
 var MovieService = require('./lib/MovieService');
-var BizParamsFilter = require('./lib/BizParamsFilter');
+var BaseParamsFilter = require('./lib/BaseParamsFilter');
 
 /**
  * @param {Object} httpClient
@@ -33,10 +33,10 @@ var HttpService = function(httpClient) {
  * @param userInfo        {Object}    用户信息
  * @returns {HttpService}
  */
-HttpService.$getDefaultService = function(httpClientClass, urlPrefix, userInfo) {
+HttpService.$getDefaultService = function(httpClientClass, urlPrefix, baseParamsObj) {
   if(!HttpService.defaultService) {
-    HttpService.defaultService = HttpService.$initService(httpClientClass, urlPrefix, userInfo)
-  };
+    HttpService.defaultService = HttpService.$initService(httpClientClass, urlPrefix, baseParamsObj)
+  }
   return HttpService.defaultService;
 };
 
@@ -47,12 +47,23 @@ HttpService.$getDefaultService = function(httpClientClass, urlPrefix, userInfo) 
  * @param userInfo        {Object}      用户信息
  * @returns               {HttpService} 创建好的HttpService对象
  */
-HttpService.$initService = function(httpClientClass, urlPrefix, userInfo) {
+HttpService.$initService = function(httpClientClass, urlPrefix, baseParamsObj) {
   // 生成业务参数处理规则
-  var bizFilter = new BizParamsFilter(userInfo);
+  var bizFilter = new BaseParamsFilter(baseParamsObj);
   // 生成httpClient对象
   var httpClient = new httpClientClass(urlPrefix, [bizFilter]);
   return new HttpService(httpClient)
+};
+
+/**
+ * 设置用户信息，用户统一参数处理
+ * @param baseParamsObj 通用参数
+ */
+HttpService.prototype.$setBaseParams = function(baseParamsObj) {
+  // 如果http-client对象实现了接口
+  if(this.client && this.client.$addParamsFilter) {
+    this.client.$addParamsFilter(new BaseParamsFilter(baseParamsObj))
+  }
 };
 
 /**
